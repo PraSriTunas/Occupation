@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>English Vocabulary – Occupations & Jobs</title>
+  <style>
+    :root {
+      --primary-color: #0984E3;
+      --secondary-color: #00CEC9;
+      --accent-color: #FF7675;
+      --bg-color: #F0F4F8;
+      --card-bg: #FFFFFF;
+      --text-color: #2D3436;
+      --border-radius: 24px;
+      --shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Fredoka', 'Arial', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+    }
+
+    header {
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+      background: linear-gradient(135deg, #0984E3, #74B9FF);
+      color: white;
+      padding: 16px 20px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+    }
+
+    .lang-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.25);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 2px;
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: normal;
+      opacity: 0.95;
+    }
+
+    .flashcard-wrapper {
+      width: 100%;
+      max-width: 500px;
+      margin: 15px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-weight: bold;
+      color: #636E72;
+      font-size: 0.95rem;
+    }
+
+    .progress-bg {
+      flex: 1;
+      height: 14px;
+      background: #DFE6E9;
+      border-radius: 10px;
+      margin: 0 12px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0984E3, #00CEC9);
+      width: 8.33%;
+      transition: width 0.3s ease;
+    }
+
+    /* 单卡片容器 */
+    .card {
+      width: 100%;
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 24px 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      border: 4px solid #74B9FF;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card.speaking {
+      transform: scale(1.02);
+      box-shadow: 0 15px 35px rgba(9, 132, 227, 0.3);
+      border-color: #FF7675;
+    }
+
+    /* 图片容器 */
+    .img-box {
+      width: 100%;
+      height: 230px;
+      background: #F8F9FA;
+      border-radius: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      border: 2px dashed #B2BEC3;
+    }
+
+    .card-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .default-icon {
+      font-size: 5.5rem;
+      user-select: none;
+    }
+
+    /* 生字展示区 */
+    .word-box {
+      margin: 18px 0 6px 0;
+      text-align: center;
+    }
+
+    .main-word {
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: #2D3436;
+      letter-spacing: 1px;
+      line-height: 1.15;
+    }
+
+    .sub-translation {
+      font-size: 1.15rem;
+      color: #636E72;
+      margin-top: 8px;
+      font-weight: bold;
+    }
+
+    /* 朗读按钮 */
+    .audio-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #0984E3, #74B9FF);
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-radius: 16px;
+      margin-top: 15px;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(9, 132, 227, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: transform 0.1s ease;
+    }
+
+    .audio-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* 翻页控制 */
+    .nav-controls {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .btn-nav {
+      flex: 1;
+      padding: 12px;
+      font-size: 1.05rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-prev { background-color: #B2BEC3; color: white; }
+    .btn-next { background-color: #00CEC9; color: white; }
+
+    /* 底部工具栏 */
+    .bottom-bar {
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .btn-tool {
+      background: white;
+      border: 2px solid #DFE6E9;
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 0.85rem;
+      color: #2D3436;
+      cursor: pointer;
+    }
+
+    .toast-warning {
+      background-color: #FFEAA7;
+      color: #D63031;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      margin-bottom: 10px;
+      display: none;
+      text-align: center;
+      max-width: 500px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="lang-badge">English Language</div>
+    <h1>Learn Vocabulary</h1>
+    <h2>Topic: Occupations & Jobs</h2>
+  </header>
+
+  <div id="toastWarning" class="toast-warning">
+    ⚠️ <strong>Notice:</strong> English speech engine not found. Default device voice will be used.
+  </div>
+
+  <div class="flashcard-wrapper">
+    
+    <div class="progress-bar-container">
+      <span id="cardIndex">1 / 12</span>
+      <div class="progress-bg">
+        <div id="progressBar" class="progress-fill"></div>
+      </div>
+      <span>Word Card</span>
+    </div>
+
+    <!-- 1 Card Focus Area -->
+    <div class="card" id="mainCard">
+      
+      <!-- Image Box -->
+      <div class="img-box">
+        <img id="cardImg" src="" alt="Occupation Image" class="card-img" style="display:none;" onerror="handleImageError()">
+        <div id="defaultIcon" class="default-icon">👩‍🏫</div>
+      </div>
+
+      <!-- Word Box -->
+      <div class="word-box">
+        <div class="main-word" id="wordText">Teacher</div>
+        <div class="sub-translation" id="subTranslation">老师 · Guru</div>
+      </div>
+
+      <button class="audio-btn" onclick="playCurrentWord()">
+        🔊 Listen Pronunciation
+      </button>
+
+    </div>
+
+    <div class="nav-controls">
+      <button class="btn-nav btn-prev" onclick="prevCard()">◀ Previous</button>
+      <button class="btn-nav btn-next" onclick="nextCard()">Next ▶</button>
+    </div>
+
+  </div>
+
+  <div class="bottom-bar">
+    <button class="btn-tool" onclick="playAllSequence()">🔊 Listen All</button>
+    <button class="btn-tool" onclick="stopSpeech()">⏸️ Stop</button>
+    <button class="btn-tool" onclick="testVoice()">📢 Test Voice</button>
+    <button class="btn-tool" onclick="resetToFirst()">🔄 Restart</button>
+  </div>
+
+  <script>
+    const vocabularyList = [
+      { id: 1, word: 'Teacher', sub: '老师 · Guru', imgName: 'guru.png', emoji: '👩‍🏫' },
+      { id: 2, word: 'Doctor', sub: '医生 · Doktor', imgName: 'doktor.png', emoji: '👨‍⚕️' },
+      { id: 3, word: 'Nurse', sub: '护士 · Jururawat', imgName: 'jururawat.png', emoji: '👩‍⚕️' },
+      { id: 4, word: 'Firefighter', sub: '消防员 · Ahli Bomba', imgName: 'ahli_bomba.png', emoji: '👨‍🚒' },
+      { id: 5, word: 'Policeman', sub: '警察 · Polis', imgName: 'polis.png', emoji: '👮‍♂️' },
+      { id: 6, word: 'Lawyer', sub: '律师 · Peguam', imgName: 'peguam.png', emoji: '⚖️' },
+      { id: 7, word: 'Judge', sub: '法官 · Hakim', imgName: 'hakim.png', emoji: '👨‍⚖️' },
+      { id: 8, word: 'Soldier', sub: '军人 · Tentera', imgName: 'tentera.png', emoji: '💂‍♂️' },
+      { id: 9, word: 'Pilot', sub: '飞行员 · Juruterbang', imgName: 'juruterbang.png', emoji: '👨‍✈️' },
+      { id: 10, word: 'Engineer', sub: '工程师 · Jurutera', imgName: 'jurutera.png', emoji: '👷‍♂️' },
+      { id: 11, word: 'Fisherman', sub: '渔夫 · Nelayan', imgName: 'nelayan.png', emoji: '🎣' },
+      { id: 12, word: 'Farmer', sub: '农民 · Petani', imgName: 'petani.png', emoji: '👨‍🌾' }
+    ];
+
+    let currentIndex = 0;
+    let currentVoice = null;
+    let isPlayingAll = false;
+    let autoTimer = null;
+
+    function initVoices() {
+      if ('speechSynthesis' in window) {
+        const voices = speechSynthesis.getVoices();
+        currentVoice = voices.find(v => v.lang === 'en-US' || v.lang === 'en-GB' || v.lang.startsWith('en')) || null;
+        
+        const toast = document.getElementById('toastWarning');
+        if (!currentVoice && voices.length > 0) {
+          toast.style.display = 'block';
+        } else {
+          toast.style.display = 'none';
+        }
+      }
+    }
+
+    if ('speechSynthesis' in window) {
+      speechSynthesis.onvoiceschanged = initVoices;
+      initVoices();
+    }
+
+    function speak(text, onEndCallback = null) {
+      if (!('speechSynthesis' in window)) {
+        alert('Your browser does not support Speech Synthesis.');
+        return;
+      }
+
+      speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.8;
+      utterance.pitch = 1.0;
+
+      if (currentVoice) {
+        utterance.voice = currentVoice;
+        utterance.lang = currentVoice.lang;
+      } else {
+        utterance.lang = 'en-US';
+      }
+
+      utterance.onend = () => { if (onEndCallback) onEndCallback(); };
+      utterance.onerror = () => { if (onEndCallback) onEndCallback(); };
+
+      speechSynthesis.speak(utterance);
+    }
+
+    function stopSpeech() {
+      isPlayingAll = false;
+      clearTimeout(autoTimer);
+      if ('speechSynthesis' in window) {
+        speechSynthesis.cancel();
+      }
+      document.getElementById('mainCard').classList.remove('speaking');
+    }
+
+    function testVoice() {
+      speak('Hello everyone! Let us learn occupations together.');
+    }
+
+    function updateCardDisplay() {
+      const item = vocabularyList[currentIndex];
+
+      document.getElementById('wordText').innerText = item.word;
+      document.getElementById('subTranslation').innerText = item.sub;
+      
+      document.getElementById('cardIndex').innerText = `${currentIndex + 1} / ${vocabularyList.length}`;
+      document.getElementById('progressBar').style.width = `${((currentIndex + 1) / vocabularyList.length) * 100}%`;
+
+      const imgEl = document.getElementById('cardImg');
+      const defaultIconEl = document.getElementById('defaultIcon');
+
+      imgEl.src = `./images/${item.imgName}`;
+      imgEl.style.display = 'block';
+      defaultIconEl.style.display = 'none';
+    }
+
+    function handleImageError() {
+      const imgEl = document.getElementById('cardImg');
+      const defaultIconEl = document.getElementById('defaultIcon');
+      const item = vocabularyList[currentIndex];
+
+      if (!imgEl.dataset.triedRoot) {
+        imgEl.dataset.triedRoot = "true";
+        imgEl.src = `./${item.imgName}`;
+        return;
+      }
+
+      delete imgEl.dataset.triedRoot;
+      imgEl.style.display = 'none';
+      defaultIconEl.style.display = 'block';
+      defaultIconEl.innerText = item.emoji;
+    }
+
+    function playCurrentWord() {
+      stopSpeech();
+      const item = vocabularyList[currentIndex];
+      const card = document.getElementById('mainCard');
+      
+      card.classList.add('speaking');
+      speak(item.word, () => {
+        card.classList.remove('speaking');
+      });
+    }
+
+    function nextCard() {
+      stopSpeech();
+      if (currentIndex < vocabularyList.length - 1) {
+        currentIndex++;
+      } else {
+        currentIndex = 0;
+      }
+      updateCardDisplay();
+      playCurrentWord();
+    }
+
+    function prevCard() {
+      stopSpeech();
+      if (currentIndex > 0) {
+        currentIndex--;
+      } else {
+        currentIndex = vocabularyList.length - 1;
+      }
+      updateCardDisplay();
+      playCurrentWord();
+    }
+
+    function resetToFirst() {
+      stopSpeech();
+      currentIndex = 0;
+      updateCardDisplay();
+    }
+
+    function playAllSequence() {
+      stopSpeech();
+      isPlayingAll = true;
+      currentIndex = 0;
+      playSequenceStep();
+    }
+
+    function playSequenceStep() {
+      if (!isPlayingAll) return;
+
+      updateCardDisplay();
+      const item = vocabularyList[currentIndex];
+      const card = document.getElementById('mainCard');
+      
+      card.classList.add('speaking');
+
+      speak(item.word, () => {
+        card.classList.remove('speaking');
+        if (isPlayingAll) {
+          autoTimer = setTimeout(() => {
+            if (currentIndex < vocabularyList.length - 1) {
+              currentIndex++;
+              playSequenceStep();
+            } else {
+              isPlayingAll = false;
+              alert('Great job! You have learned all 12 occupations!');
+            }
+          }, 1200);
+        }
+      });
+    }
+
+    updateCardDisplay();
+  </script>
+</body>
+</html>
